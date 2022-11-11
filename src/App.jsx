@@ -1,44 +1,70 @@
-import {useRef, useState,useEffect } from "react"
-import {Route, Routes} from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
 import Contact from "./pages/Contact.jsx";
 import facade from "./apiFacade";
 import Header from "./components/Header.jsx";
 import SignUp from "./components/SignUp.jsx";
-import Pokemon from "./pages/Pokemon.jsx";
+import Item from "./pages/Item.jsx";
+import List from "./pages/List.jsx";
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [item, setItem] = useState({});
+  const [list, setList] = useState([]);
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  // Event når der trykkes på submit id:
+  const getItem = (input) => {
+    facade.fetchItem(input).then((res) => {
+      setItem(res);
+      console.log("fra getitem typeaf res: " + typeof res);
+    });
+  };
+
+  const getList = async (input) => {
+    const res = await facade.fetchList(input);
+    // const data = await res.json();
+    console.log("udskrift af res:" + res);
+    console.log("fra getList typeaf res: " + typeof res);
+    // console.log(data);
+
+    setList(res);
+    console.log("fra getList typeaf list: " + typeof res);
+    console.log(res);
+    console.log("udskrift af list" + list);
+  };
 
   const obj = {
     name: "TestName",
     street: "TestStreet",
     town: "TestTown",
     country: "TestCountry",
-  }
+  };
 
   return (
-      <>
-        <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
-        <Routes>
-          <Route path="" element={<Home/>}/>
-          <Route path="/search" element={<Search/>}/>
-          <Route path="/contact" element={<Contact address={obj}/>}/>
-          <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn}/>}/>
-          <Route path="/pokemon" element={<Pokemon/>}/>
-          <Route path="*" element={<h1>Page Not Found !!!!</h1>}/>
-        </Routes>
-      </>
+    <>
+      <Header setLoggedIn={setLoggedIn} loggedIn={loggedIn} />
+      <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/contact" element={<Contact address={obj} />} />
+        <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn} />} />
+        <Route
+          path="/item"
+          element={<Item onGetItem={getItem} item={item} />}
+        />
+        <Route
+          path="/list"
+          element={<List onGetList={getList} list={list} />}
+        />
+        <Route path="*" element={<h1>Page Not Found !!!!</h1>} />
+      </Routes>
+    </>
   );
 }
 
 export default App;
-
-
-
-
 
 // function LogIn({ login }) {
 //   const init = { username: "", password: "" };
