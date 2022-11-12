@@ -24,15 +24,12 @@ function App() {
 
   const getList = async (input) => {
     const res = await facade.fetchList(input);
-    // const data = await res.json();
-    console.log("udskrift af res:" + res);
-    console.log("fra getList typeaf res: " + typeof res);
-    // console.log(data);
 
     setList(res);
-    console.log("fra getList typeaf list: " + typeof res);
-    console.log(res);
-    console.log("udskrift af list" + list);
+  };
+
+  const getCity = async (city) => {
+    console.log(city);
   };
 
   const obj = {
@@ -48,7 +45,10 @@ function App() {
       <Routes>
         <Route path="" element={<Home />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/contact" element={<Contact address={obj} />} />
+        <Route
+          path="/contact"
+          element={<Contact onGetCity={getCity} address={obj} />}
+        />
         <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn} />} />
         <Route
           path="/item"
@@ -130,4 +130,3 @@ export default App;
 //   )
 //
 // }
-// export default App;
