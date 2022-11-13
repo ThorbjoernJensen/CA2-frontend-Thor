@@ -7,20 +7,13 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 const cities = ["Paris", "London", "Copenhagen", "Berlin"];
 
-function Contact({ address, onGetCity }) {
+function Cityinfo({ onGetCity, cityInfo }) {
   const [value, setValue] = useState(cities[0]);
   const [inputValue, setInputValue] = React.useState("");
 
   return (
     <div>
-      <h1>Contacts</h1>
-      <h3>{address.name}</h3>
-      <p>{address.street}</p>
-      <p>{address.town}</p>
-      <p>{address.country}</p>
-      {/* <div>{`value: ${value !== null ? `'${value}'` : "null"}`}</div>
-      <div>{`inputValue: '${inputValue}'`}</div>
-      <br /> */}
+      <h1>Cityinfo for </h1>
       <Autocomplete
         value={value}
         onChange={(event, newValue) => {
@@ -30,15 +23,21 @@ function Contact({ address, onGetCity }) {
         inputValue={inputValue}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
-          // onGetCity(newInputValue);
         }}
         id="controllable-states-demo"
         options={cities}
         sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Controllable" />}
-      />{" "}
+        renderInput={(params) => <TextField {...params} />}
+      />
+      <h3> Current weather in {inputValue} </h3>
+      <div>
+        <img src={cityInfo.iconURL} alt="weathericon" />
+        <p></p>
+        <p>Temperature: {cityInfo.temp} C</p>
+        <p>Wind: {cityInfo.wind} m/s </p>
+      </div>
     </div>
   );
 }
 
-export default Contact;
+export default Cityinfo;

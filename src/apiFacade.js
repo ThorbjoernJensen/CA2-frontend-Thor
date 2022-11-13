@@ -39,6 +39,22 @@ function apiFacade() {
     );
   };
 
+  const fetchCityInfo = (String) => {
+    const opts = makeOptions("POST", true, { query: String });
+    return (
+      fetch(BASE_URL + "/info/cityinfo", opts)
+        .then(handleHttpErrors)
+        // .then((data) => console.log(data))
+        .catch((err) => {
+          if (err.status) {
+            err.fullError.then((e) => console.log(e.message));
+          } else {
+            console.log("Network Error");
+          }
+        })
+    );
+  };
+
   const fetchList = async (String) => {
     const opts = makeOptions("POST", true, { deckSize: String });
     return (
@@ -110,6 +126,7 @@ function apiFacade() {
     fetchData,
     fetchItem,
     fetchList,
+    fetchCityInfo,
   };
 }
 const facade = apiFacade();

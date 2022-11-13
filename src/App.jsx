@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
-import Contact from "./pages/Contact.jsx";
+import Cityinfo from "./pages/Cityinfo.jsx";
 import facade from "./apiFacade";
 import Header from "./components/Header.jsx";
 import SignUp from "./components/SignUp.jsx";
@@ -13,6 +13,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [item, setItem] = useState({});
   const [list, setList] = useState([]);
+
+  const [cityInfo, setCityInfo] = useState({});
 
   // Event når der trykkes på submit id:
   const getItem = (input) => {
@@ -28,15 +30,11 @@ function App() {
     setList(res);
   };
 
-  const getCity = async (city) => {
-    console.log(city);
-  };
-
-  const obj = {
-    name: "TestName",
-    street: "TestStreet",
-    town: "TestTown",
-    country: "TestCountry",
+  const getCityInfo = (input) => {
+    facade.fetchCityInfo(input).then((res) => {
+      console.log(input);
+      setCityInfo(res);
+    });
   };
 
   return (
@@ -46,8 +44,8 @@ function App() {
         <Route path="" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route
-          path="/contact"
-          element={<Contact onGetCity={getCity} address={obj} />}
+          path="/cityinfo"
+          element={<Cityinfo onGetCity={getCityInfo} cityInfo={cityInfo} />}
         />
         <Route path="/signup" element={<SignUp setLoggedIn={setLoggedIn} />} />
         <Route

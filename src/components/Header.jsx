@@ -18,8 +18,8 @@ function Header({ setErrorMsg, loggedIn, setLoggedIn }) {
         <NavLink to="/search">
           <i className="fa fa-fw fa-search"></i> Search
         </NavLink>
-        <NavLink to="/contact">
-          <i className="fa fa-fw fa-envelope"></i> Contact
+        <NavLink to="/cityinfo">
+          <i className="fa fa-fw fa-envelope"></i> Cityinfo
         </NavLink>
         <NavLink to="/item">
           <i className="fa fa-fw fa-envelope"></i> Item{" "}
